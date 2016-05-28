@@ -12,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
@@ -30,7 +33,15 @@ public class CrimeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_crime,container,false);
         mTitleField = (EditText)v.findViewById(R.id.crime_title);
         mDateButton = (Button)v.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getDate().toString());
+
+        //Форматирование даты
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy ; HH:mm:ss z");
+        dateFormat.toString();
+        String dateText = dateFormat.format( new Date() );
+
+
+        //mDateButton.setText(mCrime.getDate().toString());
+        mDateButton.setText(dateText);
         mDateButton.setEnabled(false);
 
 
