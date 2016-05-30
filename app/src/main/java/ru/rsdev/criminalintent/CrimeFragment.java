@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
 
@@ -25,7 +26,10 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        mCrime = new Crime();
+        //mCrime = new Crime();
+
+        UUID crimeId = (UUID)getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
     @Override
@@ -36,13 +40,15 @@ public class CrimeFragment extends Fragment {
 
         //Форматирование даты
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy ; HH:mm:ss z");
-        dateFormat.toString();
+        //dateFormat.toString();
         String dateText = dateFormat.format( new Date() );
 
 
         //mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setText(dateText);
         mDateButton.setEnabled(false);
+
+        mTitleField.setText(mCrime.getTitle());
 
 
         mTitleField.addTextChangedListener(new TextWatcher() {
@@ -63,6 +69,7 @@ public class CrimeFragment extends Fragment {
         });
 
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
