@@ -23,7 +23,6 @@ public class CrimePagerActivity extends FragmentActivity {
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.activity_crime_pager);
-        UUID crimeID = (UUID)getIntent().getSerializableExtra(EXTRA_CRIME_ID);
 
 
         mViewPager = (ViewPager)findViewById(R.id.activity_crime_pager_view_pager);
@@ -42,8 +41,15 @@ public class CrimePagerActivity extends FragmentActivity {
             }
         });
 
+        UUID crimeID = (UUID)getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+
+
         for(int i=0;i<mCrimes.size();i++){
-            if(mCrimes.get(i).getId().equals(crimeID)){
+            UUID par1 = mCrimes.get(i).getId();
+            UUID par2 = crimeID;
+
+
+            if(par1.equals(par2)){
                 mViewPager.setCurrentItem(i);
                 break;
             }
