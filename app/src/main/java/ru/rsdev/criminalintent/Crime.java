@@ -3,9 +3,7 @@ package ru.rsdev.criminalintent;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by rsdev on 19.05.2016.
- */
+
 public class Crime {
     private UUID mId;
     private String mTitle;
