@@ -99,6 +99,7 @@ public class CrimeFragment extends Fragment {
         });
 
         return v;
+        
     }
 
     public static CrimeFragment newInstance(UUID crimeId){
