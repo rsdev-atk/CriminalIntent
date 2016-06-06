@@ -7,5 +7,11 @@
 
     <string name="date_picker_title">Дата преступления :</string>
 
+    <string name="new_crime">Новое преступление</string>
+    <string name="show_subtitle">Показать подсказки</string>
+    <string name="hide_subtitle">Скрыть подсказки</string>
+    <string name="subtitle_format">%1$s преступление</string>
+
+
 
 </resources>
