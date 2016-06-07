@@ -56,7 +56,7 @@ public class CrimeFragment extends Fragment {
 
 
         //mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setText(dateText);
+        updateDate(dateText);
         //mDateButton.setEnabled(false);
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,10 +119,13 @@ public class CrimeFragment extends Fragment {
 
         if (requestCode == REQUEST_DATE){
 
-            ////////////////////////////////////           ////////////
-            //Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            //mCrime.setDate(date);
-            //mDateButton.setText(mCrime.getDate().toString());
+            Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mCrime.setDate(date);
+            updateDate(mCrime.getDate().toString());
         }
+    }
+
+    private void updateDate(String text) {
+        mDateButton.setText(text);
     }
 }
