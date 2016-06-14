@@ -21,22 +21,22 @@ import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
 
-    private Crime mCrime;
-    private EditText mTitleField;
-    private Button mDateButton;
-    public CheckBox mSolvedCheckBox;
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
 
+    private Crime mCrime;
+    private EditText mTitleField;
+    private Button mDateButton;
+    public CheckBox mSolvedCheckBox;
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        //mCrime = new Crime();
+        //UUID crimeId = (UUID)getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
 
-        UUID crimeId = (UUID)getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
 
-        //UUID crimeId = (UUID)getArguments().getSerializable(ARG_CRIME_ID);
 
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
 
