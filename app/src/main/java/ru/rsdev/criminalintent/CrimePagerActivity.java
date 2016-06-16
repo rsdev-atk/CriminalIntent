@@ -13,22 +13,32 @@ import java.util.List;
 import java.util.UUID;
 
 public class CrimePagerActivity extends AppCompatActivity {
+    private static final String EXTRA_CRIME_ID =
+            "com.bignerdranch.android.criminalintent.crime_id";
 
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
-    private static final String EXTRA_CRIME_ID = "ru.rsdev.criminalintent.crime_id";
 
+    public static Intent newIntent(Context packageContext, UUID crimeId) {
+        Intent intent = new Intent(packageContext, CrimePagerActivity.class);
+        intent.putExtra(EXTRA_CRIME_ID, crimeId);
+        return intent;
+    }
 
     @Override
-    protected void onCreate(Bundle bundle){
-        super.onCreate(bundle);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
 
+        UUID crimeId = (UUID) getIntent()
+                .getSerializableExtra(EXTRA_CRIME_ID);
 
-        mViewPager = (ViewPager)findViewById(R.id.activity_crime_pager_view_pager);
-        mCrimes = CrimeLab.get(this).getCrime();
+        mViewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view_pager);
+
+        mCrimes = CrimeLab.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+
             @Override
             public Fragment getItem(int position) {
                 Crime crime = mCrimes.get(position);
@@ -41,25 +51,27 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         });
 
-        UUID crimeID = (UUID)getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
+            @Override
+            public void onPageSelected(int position) {
+                Crime crime = mCrimes.get(position);
+                if (crime.getTitle() != null) {
+                    setTitle(crime.getTitle());
+                }
+            }
 
-        for(int i=0;i<mCrimes.size();i++){
-            UUID par1 = mCrimes.get(i).getId();
-            UUID par2 = crimeID;
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
 
-
-            if(par1.equals(par2)){
+        for (int i = 0; i < mCrimes.size(); i++) {
+            if (mCrimes.get(i).getId().equals(crimeId)) {
                 mViewPager.setCurrentItem(i);
                 break;
             }
         }
     }
-
-    public static Intent newIntent(Context context, UUID crimeId){
-        Intent intent = new Intent(context, CrimePagerActivity.class);
-        intent.putExtra(EXTRA_CRIME_ID, crimeId);
-        return intent;
-    }
-
 }
